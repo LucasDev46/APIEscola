@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
 
 namespace School.Business.Models
 {
@@ -12,5 +8,9 @@ namespace School.Business.Models
 
         public Guid ProfessorId { get; set; }
         public Professor Professor { get; set; }
+
+        // Relacionamento N:N com Aluno via MatriculaDisciplina
+
+        public ICollection<MatriculaDisciplina> Matriculas { get; set; } = new List<MatriculaDisciplina>();
     }
 }

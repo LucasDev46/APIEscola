@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
 
 namespace School.Business.Models
 {
@@ -13,6 +9,6 @@ namespace School.Business.Models
         public DateTime DataNascimento { get; set; }
         public DateTime DataCadastro { get; set; } = DateTime.UtcNow;
         public string Tipo { get; set; }
-        public bool Ativo { get; set; }
+        public bool Ativo { get; set; } = true;
     }
 }

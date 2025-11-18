@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
 
 namespace School.Business.Models
 {
@@ -13,9 +9,6 @@ namespace School.Business.Models
         public Guid DisciplinaId { get; set; }
         public Disciplina Disciplina { get; set; }
         public decimal? NotaFinal { get; set; }
-
-        public ICollection<Nota> Notas { get; set; }
-
-
+        public ICollection<Nota> Notas { get; set; } = new List<Nota>();
     }
 }
