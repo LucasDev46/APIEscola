@@ -11,7 +11,7 @@ using School.Data.Context;
 
 namespace School.Data.Migrations
 {
-    [DbContext(typeof(AppDbContext))]
+    [DbContext(typeof(SchoolDbContext))]
     [Migration("20251118192510_initial")]
     partial class initial
     {
