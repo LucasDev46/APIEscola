@@ -3,7 +3,6 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using School.Data.Context;
 
@@ -12,11 +11,9 @@ using School.Data.Context;
 namespace School.Data.Migrations
 {
     [DbContext(typeof(SchoolDbContext))]
-    [Migration("20251118192510_initial")]
-    partial class initial
+    partial class SchoolDbContextModelSnapshot : ModelSnapshot
     {
-        /// <inheritdoc />
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -27,16 +24,21 @@ namespace School.Data.Migrations
 
             modelBuilder.Entity("School.Business.Models.Disciplina", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<bool>("Ativo")
+                        .HasColumnType("bit");
 
                     b.Property<string>("Nome")
                         .IsRequired()
                         .HasColumnType("varchar(100)");
 
-                    b.Property<Guid>("ProfessorId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<long>("ProfessorId")
+                        .HasColumnType("bigint");
 
                     b.HasKey("Id");
 
@@ -47,15 +49,17 @@ namespace School.Data.Migrations
 
             modelBuilder.Entity("School.Business.Models.MatriculaDisciplina", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("bigint");
 
-                    b.Property<Guid>("AlunoId")
-                        .HasColumnType("uniqueidentifier");
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
-                    b.Property<Guid>("DisciplinaId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<long>("AlunoId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("DisciplinaId")
+                        .HasColumnType("bigint");
 
                     b.Property<decimal?>("NotaFinal")
                         .HasPrecision(5, 2)
@@ -72,9 +76,11 @@ namespace School.Data.Migrations
 
             modelBuilder.Entity("School.Business.Models.Nota", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<DateTime>("DataLancamento")
                         .HasColumnType("datetime2");
@@ -83,8 +89,8 @@ namespace School.Data.Migrations
                         .IsRequired()
                         .HasColumnType("varchar(100)");
 
-                    b.Property<Guid>("MatriculaDisciplinaId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<long>("MatriculaDisciplinaId")
+                        .HasColumnType("bigint");
 
                     b.Property<decimal>("Peso")
                         .HasColumnType("decimal(3,2)");
@@ -101,9 +107,11 @@ namespace School.Data.Migrations
 
             modelBuilder.Entity("School.Business.Models.Pessoa", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<bool>("Ativo")
                         .HasColumnType("bit");

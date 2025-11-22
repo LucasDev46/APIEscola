@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace School.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class initial : Migration
+    public partial class TrocadeId : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -15,7 +15,8 @@ namespace School.Data.Migrations
                 name: "Pessoas",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     Nome = table.Column<string>(type: "varchar(100)", nullable: false),
                     Email = table.Column<string>(type: "varchar(100)", nullable: false),
                     DataNascimento = table.Column<DateTime>(type: "datetime", nullable: false),
@@ -35,9 +36,10 @@ namespace School.Data.Migrations
                 name: "Disciplinas",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     Nome = table.Column<string>(type: "varchar(100)", nullable: false),
-                    ProfessorId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    ProfessorId = table.Column<long>(type: "bigint", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -54,9 +56,10 @@ namespace School.Data.Migrations
                 name: "Matriculas",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    AlunoId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    DisciplinaId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    AlunoId = table.Column<long>(type: "bigint", nullable: false),
+                    DisciplinaId = table.Column<long>(type: "bigint", nullable: false),
                     NotaFinal = table.Column<decimal>(type: "decimal(5,2)", precision: 5, scale: 2, nullable: true)
                 },
                 constraints: table =>
@@ -80,9 +83,10 @@ namespace School.Data.Migrations
                 name: "Notas",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     Valor = table.Column<decimal>(type: "decimal(5,2)", nullable: false),
-                    MatriculaDisciplinaId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    MatriculaDisciplinaId = table.Column<long>(type: "bigint", nullable: false),
                     Peso = table.Column<decimal>(type: "decimal(3,2)", nullable: false),
                     Descricao = table.Column<string>(type: "varchar(100)", nullable: false),
                     DataLancamento = table.Column<DateTime>(type: "datetime2", nullable: false)

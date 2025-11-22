@@ -10,5 +10,6 @@ namespace School.Data.Repository
         public ProfessorRepository(SchoolDbContext context) : base(context)
         {
         }
+        
     }
 }

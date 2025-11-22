@@ -9,35 +9,37 @@ namespace School.Data.Repository
 {
     public class Repository<T> : IRepository<T> where T : class
     {
-        private readonly SchoolDbContext _context;
+        protected readonly SchoolDbContext _context;
+        protected readonly DbSet<T> _dbSet;
 
         public Repository(SchoolDbContext context)
         {
             _context = context;
+            _dbSet = _context.Set<T>();
         }
 
         public async Task<IEnumerable<T>> SelectAll()
         {
-            return await _context.Set<T>().AsNoTracking().ToListAsync();
+            return await _dbSet.AsNoTracking().ToListAsync();
         }
         public Task<T> SelectByQuery(Expression<Func<T, bool>> predicate)
         {
-            return _context.Set<T>().AsNoTracking().FirstOrDefaultAsync(predicate);
+            return _dbSet.AsNoTracking().FirstOrDefaultAsync(predicate);
         }
 
         public void Update(T entity)
         {
-            _context.Entry(entity).State = EntityState.Modified;
-            _context.Set<T>().Update(entity);
+            _dbSet.Entry(entity).State = EntityState.Modified;
+            _dbSet.Update(entity);
         }
         public void Insert(T entity)
         {
-            _context.Set<T>().Add(entity);
+            _dbSet.Add(entity);
         }
 
         public void Delete(T entity)
         {
-            _context.Set<T>().Remove(entity);
+            _dbSet.Remove(entity);
         }
 
         public async Task Commit()
@@ -45,6 +47,5 @@ namespace School.Data.Repository
             await _context.SaveChangesAsync();
         }
 
-        
     }
 }

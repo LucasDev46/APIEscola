@@ -1,4 +1,4 @@
-﻿namespace School.Api.DTO
+﻿namespace School.Business.DTO.Professor
 {
     public class InativarProfessorDTO
     {

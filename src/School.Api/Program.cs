@@ -2,7 +2,6 @@ using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
 using School.Api.Config;
 using School.Data.Context;
 
@@ -26,7 +25,9 @@ builder.Services.Configure<ApiBehaviorOptions>(options =>
 
 //Resolvendo dependencias
 builder.Services.ResolveDependecies();
-builder.Services.AddAutoMapper(typeof(Program));
+//builder.Services.AddAutoMapper(typeof(Program));
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
 
 builder.Services.AddFluentValidationAutoValidation();
 builder.Services.AddValidatorsFromAssemblyContaining<Program>();
