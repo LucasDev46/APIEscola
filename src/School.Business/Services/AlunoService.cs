@@ -24,9 +24,9 @@ namespace School.Business.Services
 
 
 
-        public async Task<DadosAlunoDTO> GetAlunoById(long id)
+        public async Task<DadosAlunoDTO> ObterById(long id)
         {
-            var aluno = await _alunoRepository.SelectByQuery(a => a.Id == id);
+            var aluno = await _alunoRepository.GetAlunoWithDisciplinas(id);
             if (aluno == null)
             {
                 Notificar("Aluno não encontrado.");
@@ -36,14 +36,14 @@ namespace School.Business.Services
             return alunoDto;
         }
 
-        public async Task<IEnumerable<DadosAlunoDTO>> GetTodosAlunos()
+        public async Task<IEnumerable<DadosAlunoDTO>> ObterTodos()
         {
             var alunos = await _alunoRepository.SelectAll();
             var alunosDto = _mapper.Map<IEnumerable<DadosAlunoDTO>>(alunos);
             return alunosDto;
         }
 
-        public async Task<DadosAlunoDTO> CriarAluno(CriarAlunoDTO aluno)
+        public async Task<DadosAlunoDTO> Criar(CriarAlunoDTO aluno)
         {
             if(ExecutarValidacao(new CriarAlunoValidator(), aluno) == false) return null;
 
@@ -59,7 +59,7 @@ namespace School.Business.Services
             return alunoDto;
         }
 
-        public async Task<DadosAlunoDTO> AtualizarAluno(AtualizarAlunoDTO aluno)
+        public async Task<DadosAlunoDTO> Atualizar(AtualizarAlunoDTO aluno)
         {
             if(ExecutarValidacao(new AtualizarAlunoValidator(), aluno) == false) return null;
             var result = await _alunoRepository.SelectByQuery(a => a.Id == aluno.Id);
@@ -75,7 +75,7 @@ namespace School.Business.Services
             return alunoDto;
         }
   
-        public async Task<bool> inativarAluno(long id)
+        public async Task<bool> Inativar(long id)
         {
             var aluno = await _alunoRepository.SelectByQuery(a => a.Id == id);
             if (aluno == null)
@@ -90,7 +90,7 @@ namespace School.Business.Services
             }
 
             aluno.Ativo = false;
-  
+            _alunoRepository.Update(aluno);
             await _alunoRepository.Commit();
             return true;
         }

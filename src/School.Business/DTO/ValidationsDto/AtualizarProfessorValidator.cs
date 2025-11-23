@@ -5,10 +5,10 @@ using School.Business.DTO.Professor;
 
 namespace School.Business.DTO.ValidationsDto
 {
-    public class UpdateProfessorValidator : AbstractValidator<UpdateProfessorDTO>
+    public class AtualizarProfessorValidator : AbstractValidator<AtualizarProfessorDTO>
     {
 
-        public UpdateProfessorValidator()
+        public AtualizarProfessorValidator()
         {
             RuleFor(p => p.Id)
                 .NotEmpty().WithMessage("O Id é obrigatório para fazer a alteração!");

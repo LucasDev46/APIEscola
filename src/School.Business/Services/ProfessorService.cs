@@ -24,7 +24,7 @@ namespace School.Business.Services
             _pessoaRepository = pessoaRepository;
         }
 
-        public async Task<IEnumerable<DadosProfessorDTO>> GetAllProf()
+        public async Task<IEnumerable<DadosProfessorDTO>> ObterTodos()
         {
             var prof = await _professorRepository.SelectAll();
             var ativo = prof.Where(p => p.Ativo);
@@ -38,7 +38,7 @@ namespace School.Business.Services
             return result;
         }
 
-        public async Task<DadosProfessorDTO> GetProfById(long id)
+        public async Task<DadosProfessorDTO> ObterById(long id)
         {
 
             var prof = await _professorRepository.SelectByQuery(p => p.Id == id);
@@ -51,10 +51,10 @@ namespace School.Business.Services
             return result;
         }
 
-        public async Task<DadosProfessorDTO> UpdateProf(UpdateProfessorDTO professor)
+        public async Task<DadosProfessorDTO> Atualizar(AtualizarProfessorDTO professor)
         {
 
-            if (ExecutarValidacao(new UpdateProfessorValidator(), professor) == false) return null;
+            if (ExecutarValidacao(new AtualizarProfessorValidator(), professor) == false) return null;
 
             var profResult = await _professorRepository.SelectByQuery(p => p.Id == professor.Id);
             if (profResult is null)
@@ -63,7 +63,7 @@ namespace School.Business.Services
                 return null;
             }
 
-            if (await _professorRepository.SelectByQuery(p => p.Email == professor.Email) != null)
+            if (await _professorRepository.SelectByQuery(p => p.Email == professor.Email && p.Id != professor.Id) != null)
             {
                 Notificar("Já existe um professor cadastrado com este e-mail.");
                 return null;
@@ -78,9 +78,9 @@ namespace School.Business.Services
             return result;
 
         }
-        public async Task<DadosProfessorDTO> CreateProf(CreateProfessorDTO professor)
+        public async Task<DadosProfessorDTO> Criar(CriarProfessorDTO professor)
         {
-            if(!ExecutarValidacao(new CreateProfessorValidator(), professor)) return null;
+            if(!ExecutarValidacao(new CriarProfessorValidator(), professor)) return null;
             if (await _pessoaRepository.GetPessoaByEmail(professor.Email) != null)
             {
                 Notificar("Já existe um usuário cadastrado com este email!");
@@ -93,7 +93,7 @@ namespace School.Business.Services
             return resultDto;
         }
 
-        public async Task<bool> inativarProf(long id)
+        public async Task<bool> Inativar(long id)
         {
             var prof = await _professorRepository.SelectByQuery(p => p.Id == id);
             if (prof is null)
@@ -108,7 +108,7 @@ namespace School.Business.Services
             }
 
             prof.Ativo = false;
-
+            _professorRepository.Update(prof);
             await _professorRepository.Commit();
 
             return true;

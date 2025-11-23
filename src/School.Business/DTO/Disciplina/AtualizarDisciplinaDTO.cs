@@ -1,6 +1,6 @@
 ﻿namespace School.Business.DTO.Disciplina
 {
-    public class UpdateDisciplinaDTO
+    public class AtualizarDisciplinaDTO
     {
         public long Id { get; set; }
         public string Nome { get; set; }

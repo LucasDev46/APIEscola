@@ -25,15 +25,15 @@ namespace School.Business.Services
 
 
 
-        public async Task<IEnumerable<DadosDisciplinaDTO>> GetAllDisc()
+        public async Task<IEnumerable<DadosDisciplinaDTO>> ObterTodos()
         {
-            var disc = await _disciplinaRepository.SelectAll();
+            var disc = await _disciplinaRepository.GetAllDisciplinaWithProfessor();
             var discDto = _mapper.Map<IEnumerable<DadosDisciplinaDTO>>(disc);
             return discDto;
         }
 
        
-        public async Task<DadosDisciplinaDTO> GetDiscById(long id)
+        public async Task<DadosDisciplinaDTO> ObterById(long id)
         {
             var disc =  await _disciplinaRepository.GetDisciplinaWithProfessor(id);
             if (disc == null)
@@ -45,9 +45,9 @@ namespace School.Business.Services
             return discDto;
         }
 
-        public async Task<DadosDisciplinaDTO> CreateDisc(CreateDisciplinaDTO disciplina)
+        public async Task<DadosDisciplinaDTO> Criar(CriarDisciplinaDTO disciplina)
         {
-            if(ExecutarValidacao(new CreateDisciplinaValidator(), disciplina) == false) return null;
+            if(ExecutarValidacao(new CriarDisciplinaValidator(), disciplina) == false) return null;
             if(_disciplinaRepository.SelectByQuery(d => d.Nome == disciplina.Nome).Result != null)
             {
                 Notificar("Já existe uma disciplina com esse nome.");
@@ -66,9 +66,9 @@ namespace School.Business.Services
             return discDto;
         }
 
-        public async Task<DadosDisciplinaDTO> UpdateDisc(UpdateDisciplinaDTO disciplina)
+        public async Task<DadosDisciplinaDTO> Atualizar(AtualizarDisciplinaDTO disciplina)
         {
-            if(!ExecutarValidacao(new UpdateDiscipinaValidator(), disciplina)) return null;
+            if(!ExecutarValidacao(new AtualizarDiscipinaValidator(), disciplina)) return null;
             if(_disciplinaRepository.SelectByQuery(d => d.Nome == disciplina.Nome && d.Id != disciplina.Id).Result != null)
             {
                 Notificar("Já existe uma disciplina com esse nome.");
@@ -88,7 +88,7 @@ namespace School.Business.Services
 
         }
 
-        public async Task<bool> inativarDisc(long id)
+        public async Task<bool> Inativar(long id)
         {
             var disc = await _disciplinaRepository.SelectByQuery(d => d.Id == id);
             if(disc is null) { 
@@ -101,7 +101,7 @@ namespace School.Business.Services
                 return false;
             }
             disc.Ativo = false;
-
+            _disciplinaRepository.Update(disc);
             await _disciplinaRepository.Commit();
             return true;
         }

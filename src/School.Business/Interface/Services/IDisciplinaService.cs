@@ -4,10 +4,10 @@ namespace School.Business.Interface.Services
 {
     public interface IDisciplinaService
     {
-        Task<IEnumerable<DadosDisciplinaDTO>> GetAllDisc();
-        Task<DadosDisciplinaDTO> GetDiscById(long id);
-        Task<DadosDisciplinaDTO> CreateDisc(CreateDisciplinaDTO professor);
-        Task<DadosDisciplinaDTO> UpdateDisc(UpdateDisciplinaDTO professor);
-        Task<bool> inativarDisc(long id);
+        Task<IEnumerable<DadosDisciplinaDTO>> ObterTodos();
+        Task<DadosDisciplinaDTO> ObterById(long id);
+        Task<DadosDisciplinaDTO> Criar(CriarDisciplinaDTO professor);
+        Task<DadosDisciplinaDTO> Atualizar(AtualizarDisciplinaDTO professor);
+        Task<bool> Inativar(long id);
     }
 }

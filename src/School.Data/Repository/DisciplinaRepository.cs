@@ -2,6 +2,7 @@
 using School.Business.Interface.Repository;
 using School.Business.Models;
 using School.Data.Context;
+using System.Collections;
 
 namespace School.Data.Repository
 {
@@ -16,6 +17,10 @@ namespace School.Data.Repository
         public async Task<Disciplina> GetDisciplinaWithProfessor(long id)
         {
             return await _dbSet.Include(p => p.Professor).AsNoTracking().FirstOrDefaultAsync(d => d.Id == id);
+        }
+        public async Task<IEnumerable<Disciplina>> GetAllDisciplinaWithProfessor()
+        {
+            return await _dbSet.Include(p => p.Professor).AsNoTracking().ToListAsync();
         }
     }
 }

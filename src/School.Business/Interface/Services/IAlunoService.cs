@@ -5,10 +5,10 @@ namespace School.Business.Interface.Services
 {
     public interface IAlunoService
     {
-        Task<IEnumerable<DadosAlunoDTO>> GetTodosAlunos();
-        Task<DadosAlunoDTO> GetAlunoById(long id);
-        Task<DadosAlunoDTO> CriarAluno(CriarAlunoDTO professor);
-        Task<DadosAlunoDTO> AtualizarAluno(AtualizarAlunoDTO professor);
-        Task<bool> inativarAluno(long id);
+        Task<IEnumerable<DadosAlunoDTO>> ObterTodos();
+        Task<DadosAlunoDTO> ObterById(long id);
+        Task<DadosAlunoDTO> Criar(CriarAlunoDTO professor);
+        Task<DadosAlunoDTO> Atualizar(AtualizarAlunoDTO professor);
+        Task<bool> Inativar(long id);
     }
 }

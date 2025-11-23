@@ -7,5 +7,6 @@ namespace School.Business.Interface.Repository
     public interface IDisciplinaRepository : IRepository<Disciplina>
     {
         Task<Disciplina> GetDisciplinaWithProfessor(long id);
+        Task<IEnumerable<Disciplina>> GetAllDisciplinaWithProfessor();
     }
 }

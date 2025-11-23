@@ -18,7 +18,7 @@ namespace School.Api.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<DadosDisciplinaDTO>>> GetAllDisciplinas()
         {
-            var disciplinas = await _disciplinaService.GetAllDisc();
+            var disciplinas = await _disciplinaService.ObterTodos();
             return CustomResponse(disciplinas);
         }
 
@@ -27,25 +27,25 @@ namespace School.Api.Controllers
 
         public async Task<ActionResult<DadosDisciplinaDTO>> GetDisciplinaById(long id)
         {
-            var disciplina = await _disciplinaService.GetDiscById(id);
+            var disciplina = await _disciplinaService.ObterById(id);
             if (disciplina is null) return CustomResponse();
             return CustomResponse(disciplina);
         }
 
         [HttpPost]
-        public async Task<ActionResult<DadosDisciplinaDTO>> CreateDisciplina(CreateDisciplinaDTO disciplinaDto)
+        public async Task<ActionResult<DadosDisciplinaDTO>> CreateDisciplina(CriarDisciplinaDTO disciplinaDto)
         {
             if (!ModelState.IsValid) return CustomResponse(ModelState);
-            var disciplina = await _disciplinaService.CreateDisc(disciplinaDto);
+            var disciplina = await _disciplinaService.Criar(disciplinaDto);
             if (disciplina is null) return CustomResponse();
             return CustomResponse(disciplina, 201);
         }
 
         [HttpPut("Atualizar-Disciplina/{id:long}")]
-        public async Task<ActionResult<DadosDisciplinaDTO>> UpdateDisciplina(UpdateDisciplinaDTO disciplinaDto)
+        public async Task<ActionResult<DadosDisciplinaDTO>> UpdateDisciplina(AtualizarDisciplinaDTO disciplinaDto)
         {
             if (!ModelState.IsValid) return CustomResponse(ModelState);
-            var disciplina = await _disciplinaService.UpdateDisc(disciplinaDto);
+            var disciplina = await _disciplinaService.Atualizar(disciplinaDto);
             if (disciplina is null) return CustomResponse();
             return CustomResponse(disciplina);
         }
@@ -53,7 +53,7 @@ namespace School.Api.Controllers
         [HttpPatch("inativar/{id:long}")]
         public async Task<ActionResult<DadosDisciplinaDTO>> InativarDisciplina(long id)
         {
-            var disciplina = await _disciplinaService.inativarDisc(id);
+            var disciplina = await _disciplinaService.Inativar(id);
             if (disciplina is false) return CustomResponse();
             return NoContent();
         }

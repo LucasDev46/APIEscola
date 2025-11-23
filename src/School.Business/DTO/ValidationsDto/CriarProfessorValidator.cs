@@ -4,9 +4,9 @@ using School.Business.DTO.Professor;
 
 namespace School.Business.DTO.ValidationsDto
 {
-    public class CreateProfessorValidator : AbstractValidator<CreateProfessorDTO>
+    public class CriarProfessorValidator : AbstractValidator<CriarProfessorDTO>
     {
-        public CreateProfessorValidator()
+        public CriarProfessorValidator()
         {
 
             RuleFor(p => p.Nome)

@@ -14,7 +14,8 @@ namespace School.Data.Repository
 
         public async Task<Aluno> GetAlunoWithDisciplinas(long id)
         {
-            return await _dbSet.Include(a => a.DisciplinasMatriculadas).AsNoTracking()
+            return await _dbSet.Include(a => a.DisciplinasMatriculadas)
+                .ThenInclude(a => a.Disciplina).AsNoTracking()
                 .FirstOrDefaultAsync(a => a.Id == id);
         }
     }

@@ -22,7 +22,7 @@ namespace School.Api.Controllers
         public async Task<ActionResult<IEnumerable<DadosProfessorDTO>>> GetAllProf()
         {
 
-            var result = await _professorService.GetAllProf();
+            var result = await _professorService.ObterTodos();
             if (result is null) return CustomResponse();
             return CustomResponse(result);
 
@@ -31,27 +31,27 @@ namespace School.Api.Controllers
         [HttpGet("{id:long}")]
         public async Task<ActionResult<DadosProfessorDTO>> GetProfById(long id)
         {
-            var prof = await _professorService.GetProfById(id);
+            var prof = await _professorService.ObterById(id);
             if (prof is null) return CustomResponse();
             return CustomResponse(prof);
 
         }
 
         [HttpPost]
-        public async Task<ActionResult> CreateProf(CreateProfessorDTO professor)
+        public async Task<ActionResult> CreateProf(CriarProfessorDTO professor)
         {
             if (!ModelState.IsValid) return CustomResponse(ModelState);
-            var result = await _professorService.CreateProf(professor);
+            var result = await _professorService.Criar(professor);
             if (result is null) return CustomResponse();
             return CustomResponse(result, StatusCodes.Status201Created);
 
         }
         [HttpPut("Atualizar-Professor{id:long}")]
-        public async Task<ActionResult> UpdateProf(UpdateProfessorDTO professor)
+        public async Task<ActionResult> UpdateProf(AtualizarProfessorDTO professor)
         {
             if (!ModelState.IsValid) return CustomResponse(ModelState);
 
-            var result = await _professorService.UpdateProf(professor);
+            var result = await _professorService.Atualizar(professor);
             if(result is null) return CustomResponse();
 
             return CustomResponse(professor, StatusCodes.Status200OK);
@@ -59,7 +59,7 @@ namespace School.Api.Controllers
         [HttpPatch("inativar/{id:long}")]
         public async Task<ActionResult> InactiveProf(long id)
         {
-           var result = await _professorService.inativarProf(id);
+           var result = await _professorService.Inativar(id);
 
             if (result is false)
                 return CustomResponse();

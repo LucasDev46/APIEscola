@@ -5,10 +5,10 @@ using School.Business.DTO.Disciplina;
 
 namespace School.Business.DTO.ValidationsDto
 {
-    public class UpdateDiscipinaValidator : AbstractValidator<UpdateDisciplinaDTO>
+    public class AtualizarDiscipinaValidator : AbstractValidator<AtualizarDisciplinaDTO>
     {
 
-        public UpdateDiscipinaValidator()
+        public AtualizarDiscipinaValidator()
         {
             RuleFor(d => d.Nome)
                 .NotEmpty().WithMessage("O nome da disciplina é obrigatório.")

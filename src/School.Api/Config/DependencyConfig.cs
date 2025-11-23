@@ -22,9 +22,14 @@ namespace School.Api.Config
 
             services.AddScoped<IAlunoRepository, AlunoRepository>();
             services.AddScoped<IAlunoService, AlunoService>();
-            services.AddScoped<IRepository<Pessoa>, Repository<Pessoa>>();
+
+            services.AddScoped<IMatriculaDisciplinaRepository, MatriculaDisciplinaRepository>();
+            services.AddScoped<IMatriculaDisciplinaService, MatriculaDisciplinaService>();
 
             services.AddScoped<IPessoaRepository, PessoaRepository>();
+
+            services.AddScoped<INotaRepository, NotaRepository>();
+            services.AddScoped<INotaService, NotaService>();
             return services;
         }
     }

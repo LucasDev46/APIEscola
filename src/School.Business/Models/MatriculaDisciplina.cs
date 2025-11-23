@@ -10,5 +10,6 @@ namespace School.Business.Models
         public Disciplina Disciplina { get; set; }
         public decimal? NotaFinal { get; set; }
         public ICollection<Nota> Notas { get; set; } = new List<Nota>();
+        public bool Ativo { get; set; } = true;
     }
 }

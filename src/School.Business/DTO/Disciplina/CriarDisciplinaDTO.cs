@@ -3,7 +3,7 @@ using System.Text.Json.Serialization;
 
 namespace School.Business.DTO.Disciplina
 {
-    public class CreateDisciplinaDTO
+    public class CriarDisciplinaDTO
     {
         public string Nome { get; set; }
 

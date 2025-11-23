@@ -19,14 +19,14 @@ namespace School.Api.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<DadosAlunoDTO>>> GetAllAlunos()
         {
-            var alunos = await _alunoService.GetTodosAlunos();
+            var alunos = await _alunoService.ObterTodos();
             return CustomResponse(alunos);
         }
 
         [HttpGet("{id:long}")]
         public async Task<ActionResult<DadosAlunoDTO>> GetAlunoById(long id)
         {
-            var aluno = await _alunoService.GetAlunoById(id);
+            var aluno = await _alunoService.ObterById(id);
             if (aluno is null) return CustomResponse();
             return CustomResponse(aluno);
         }
@@ -35,7 +35,7 @@ namespace School.Api.Controllers
         public async Task<ActionResult<DadosAlunoDTO>> CreateAluno(CriarAlunoDTO alunoDto)
         {
             if (!ModelState.IsValid) return CustomResponse(ModelState);
-            var aluno = await _alunoService.CriarAluno(alunoDto);
+            var aluno = await _alunoService.Criar(alunoDto);
             if (aluno is null) return CustomResponse();
             return CustomResponse(aluno, 201);
         }
@@ -44,7 +44,7 @@ namespace School.Api.Controllers
         public async Task<ActionResult<DadosAlunoDTO>> UpdateAluno(AtualizarAlunoDTO alunoDto)
         {
             if (!ModelState.IsValid) return CustomResponse(ModelState);
-            var aluno = await _alunoService.AtualizarAluno(alunoDto);
+            var aluno = await _alunoService.Atualizar(alunoDto);
             if (aluno is null) return CustomResponse();
             return CustomResponse(aluno);
         }
@@ -52,7 +52,7 @@ namespace School.Api.Controllers
         [HttpPatch("inativar/{id:long}")]
         public async Task<ActionResult<DadosAlunoDTO>> InativarAluno(long id)
         {
-            var aluno = await _alunoService.inativarAluno(id);
+            var aluno = await _alunoService.Inativar(id);
             if (aluno is false) return CustomResponse();
             return NoContent();
         }
