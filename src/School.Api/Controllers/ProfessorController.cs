@@ -19,7 +19,7 @@ namespace School.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<DadosProfessorDTO>>> GetAllProf()
+        public async Task<ActionResult<IEnumerable<DadosProfessorDTO>>> ObterTodosProf()
         {
 
             var result = await _professorService.ObterTodos();
@@ -29,7 +29,7 @@ namespace School.Api.Controllers
         }
 
         [HttpGet("{id:long}")]
-        public async Task<ActionResult<DadosProfessorDTO>> GetProfById(long id)
+        public async Task<ActionResult<DadosProfessorDTO>> ObterProfById(long id)
         {
             var prof = await _professorService.ObterById(id);
             if (prof is null) return CustomResponse();
@@ -38,7 +38,7 @@ namespace School.Api.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> CreateProf(CriarProfessorDTO professor)
+        public async Task<ActionResult> CriarProf(CriarProfessorDTO professor)
         {
             if (!ModelState.IsValid) return CustomResponse(ModelState);
             var result = await _professorService.Criar(professor);
@@ -47,7 +47,7 @@ namespace School.Api.Controllers
 
         }
         [HttpPut("Atualizar-Professor{id:long}")]
-        public async Task<ActionResult> UpdateProf(AtualizarProfessorDTO professor)
+        public async Task<ActionResult> AtualizarProf(AtualizarProfessorDTO professor)
         {
             if (!ModelState.IsValid) return CustomResponse(ModelState);
 
@@ -57,7 +57,7 @@ namespace School.Api.Controllers
             return CustomResponse(professor, StatusCodes.Status200OK);
         }
         [HttpPatch("inativar/{id:long}")]
-        public async Task<ActionResult> InactiveProf(long id)
+        public async Task<ActionResult> InativarProf(long id)
         {
            var result = await _professorService.Inativar(id);
 

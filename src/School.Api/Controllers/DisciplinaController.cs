@@ -16,7 +16,7 @@ namespace School.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<DadosDisciplinaDTO>>> GetAllDisciplinas()
+        public async Task<ActionResult<IEnumerable<DadosDisciplinaDTO>>>ObtertodasDisciplinas()
         {
             var disciplinas = await _disciplinaService.ObterTodos();
             return CustomResponse(disciplinas);
@@ -25,7 +25,7 @@ namespace School.Api.Controllers
 
         [HttpGet("{id:long}")]
 
-        public async Task<ActionResult<DadosDisciplinaDTO>> GetDisciplinaById(long id)
+        public async Task<ActionResult<DadosDisciplinaDTO>> ObterDisciplinaById(long id)
         {
             var disciplina = await _disciplinaService.ObterById(id);
             if (disciplina is null) return CustomResponse();
@@ -33,7 +33,7 @@ namespace School.Api.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<DadosDisciplinaDTO>> CreateDisciplina(CriarDisciplinaDTO disciplinaDto)
+        public async Task<ActionResult<DadosDisciplinaDTO>> CriarDisciplina(CriarDisciplinaDTO disciplinaDto)
         {
             if (!ModelState.IsValid) return CustomResponse(ModelState);
             var disciplina = await _disciplinaService.Criar(disciplinaDto);
@@ -42,7 +42,7 @@ namespace School.Api.Controllers
         }
 
         [HttpPut("Atualizar-Disciplina/{id:long}")]
-        public async Task<ActionResult<DadosDisciplinaDTO>> UpdateDisciplina(AtualizarDisciplinaDTO disciplinaDto)
+        public async Task<ActionResult<DadosDisciplinaDTO>> AtualizarDisciplina(AtualizarDisciplinaDTO disciplinaDto)
         {
             if (!ModelState.IsValid) return CustomResponse(ModelState);
             var disciplina = await _disciplinaService.Atualizar(disciplinaDto);

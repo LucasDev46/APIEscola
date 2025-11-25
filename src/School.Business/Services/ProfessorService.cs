@@ -81,7 +81,7 @@ namespace School.Business.Services
         public async Task<DadosProfessorDTO> Criar(CriarProfessorDTO professor)
         {
             if(!ExecutarValidacao(new CriarProfessorValidator(), professor)) return null;
-            if (await _pessoaRepository.GetPessoaByEmail(professor.Email) != null)
+            if (await _pessoaRepository.ObterPessoaByEmail(professor.Email) != null)
             {
                 Notificar("Já existe um usuário cadastrado com este email!");
                 return null;

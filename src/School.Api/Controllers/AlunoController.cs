@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using School.Business.DTO.Aluno;
 using School.Business.Interface.Services;
 
@@ -17,14 +16,14 @@ namespace School.Api.Controllers
 
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<DadosAlunoDTO>>> GetAllAlunos()
+        public async Task<ActionResult<IEnumerable<DadosAlunoDTO>>> ObterTodosAlunos()
         {
             var alunos = await _alunoService.ObterTodos();
             return CustomResponse(alunos);
         }
 
         [HttpGet("{id:long}")]
-        public async Task<ActionResult<DadosAlunoDTO>> GetAlunoById(long id)
+        public async Task<ActionResult<DadosAlunoDTO>> ObterAlunoById(long id)
         {
             var aluno = await _alunoService.ObterById(id);
             if (aluno is null) return CustomResponse();
@@ -32,7 +31,7 @@ namespace School.Api.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<DadosAlunoDTO>> CreateAluno(CriarAlunoDTO alunoDto)
+        public async Task<ActionResult<DadosAlunoDTO>> CriarAluno(CriarAlunoDTO alunoDto)
         {
             if (!ModelState.IsValid) return CustomResponse(ModelState);
             var aluno = await _alunoService.Criar(alunoDto);
@@ -41,7 +40,7 @@ namespace School.Api.Controllers
         }
 
         [HttpPut("Atualizar-Aluno/{id:long}")]
-        public async Task<ActionResult<DadosAlunoDTO>> UpdateAluno(AtualizarAlunoDTO alunoDto)
+        public async Task<ActionResult<DadosAlunoDTO>> AtualizarAluno(AtualizarAlunoDTO alunoDto)
         {
             if (!ModelState.IsValid) return CustomResponse(ModelState);
             var aluno = await _alunoService.Atualizar(alunoDto);

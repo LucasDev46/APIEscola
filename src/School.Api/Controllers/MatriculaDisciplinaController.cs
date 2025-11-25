@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using School.Business.DTO.MatriculaDisciplina;
 using School.Business.Interface.Services;
 
@@ -16,14 +15,14 @@ namespace School.Api.Controllers
         }
 
         [HttpGet("todas-matriculas")]
-        public async Task<ActionResult> GetTodasMatriculas()
+        public async Task<ActionResult> ObterTodasMatriculas()
         {
             var matriculas = await _matriculaDisciplinaService.ObterTodos();
             return CustomResponse(matriculas);
         }
 
-        [HttpGet("buscar-matricula/{id:long}")]
-        public async Task<ActionResult> GetMatriculaById(long id)
+        [HttpGet("buscar-matricula/{id:long}", Name = "ObterMatriculaById")]
+        public async Task<ActionResult> ObterMatriculaById(long id)
         {
             var result = await _matriculaDisciplinaService.ObterById(id);
             return CustomResponse(result);
@@ -34,7 +33,7 @@ namespace School.Api.Controllers
         {
             if (!ModelState.IsValid) return CustomResponse(ModelState); 
             var matricula = await _matriculaDisciplinaService.Criar(matDisc);
-            return CustomResponse(matricula);
+            return CustomResponse(matricula, 201);
         }
 
         [HttpPatch("inativar-matricula/{id:long}")]

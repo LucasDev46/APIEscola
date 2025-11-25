@@ -12,11 +12,20 @@ namespace School.Data.Repository
         {
         }
 
-        public async Task<Aluno> GetAlunoWithDisciplinas(long id)
+        public async Task<Aluno> ObterAlunoDisciplinas(long id)
         {
             return await _dbSet.Include(a => a.DisciplinasMatriculadas)
-                .ThenInclude(a => a.Disciplina).AsNoTracking()
+                .ThenInclude(a => a.Disciplina)
+                .Include(a => a.DisciplinasMatriculadas)
+                .ThenInclude(a => a.Notas)
                 .FirstOrDefaultAsync(a => a.Id == id);
+
+        }
+        public async Task<IEnumerable<Aluno>> ObterTodosAlunoDisciplina()
+        {
+            return await _dbSet.Include(a => a.DisciplinasMatriculadas)
+                .ThenInclude(a => a.Disciplina)
+                .ToListAsync();
         }
     }
 }

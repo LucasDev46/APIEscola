@@ -19,9 +19,6 @@ namespace School.Business.DTO.ValidationsDto
                 .NotEmpty().WithMessage("O email do aluno é obrigatório.")
                 .EmailAddress().WithMessage("O email informado é inválido.");
 
-            RuleFor(a => a.Matricula)
-                .NotEmpty().WithMessage("A matrícula do aluno é obrigatória.")
-                .Length(5, 20).WithMessage("O campo {PropertyName} precisa ter entre {MinLength} e {MaxLength} caracteres.");
         }
     }
 }

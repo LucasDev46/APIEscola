@@ -1,12 +1,11 @@
 ﻿
-using School.Business.DTO;
 using School.Business.Models;
 
 namespace School.Business.Interface.Repository
 {
     public interface IDisciplinaRepository : IRepository<Disciplina>
     {
-        Task<Disciplina> GetDisciplinaWithProfessor(long id);
-        Task<IEnumerable<Disciplina>> GetAllDisciplinaWithProfessor();
+        Task<Disciplina> ObterDisciplinaComProfessor(long id);
+        Task<IEnumerable<Disciplina>> ObterTodasDisciplinaComProfessor();
     }
 }

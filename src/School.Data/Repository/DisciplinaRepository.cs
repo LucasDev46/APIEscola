@@ -14,11 +14,11 @@ namespace School.Data.Repository
 
 
 
-        public async Task<Disciplina> GetDisciplinaWithProfessor(long id)
+        public async Task<Disciplina> ObterDisciplinaComProfessor(long id)
         {
             return await _dbSet.Include(p => p.Professor).AsNoTracking().FirstOrDefaultAsync(d => d.Id == id);
         }
-        public async Task<IEnumerable<Disciplina>> GetAllDisciplinaWithProfessor()
+        public async Task<IEnumerable<Disciplina>> ObterTodasDisciplinaComProfessor()
         {
             return await _dbSet.Include(p => p.Professor).AsNoTracking().ToListAsync();
         }

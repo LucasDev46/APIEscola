@@ -6,7 +6,9 @@ namespace School.Business.Interface.Repository
 {
     public interface IMatriculaDisciplinaRepository : IRepository<MatriculaDisciplina>
     {
-        Task<MatriculaDisciplina> GetMatriculaWithDetails(long id);
-        Task<MatriculaDisciplina> GetMatriculaCompleta(long id);
+        Task<MatriculaDisciplina> ObterMatriculaCompleta(long id);
+        Task<MatriculaDisciplina> ObterMatriculaComDetalhes(long id);
+        Task<IEnumerable<MatriculaDisciplina>> ObterTodasMatriculasComDetalhes();
+        Task<decimal> ObterPeso(long id);
     }
 }

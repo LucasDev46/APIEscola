@@ -1,6 +1,5 @@
 ﻿
 
-using School.Business.DTO.Disciplina;
 using School.Business.DTO.MatriculaDisciplina;
 
 namespace School.Business.DTO.Aluno

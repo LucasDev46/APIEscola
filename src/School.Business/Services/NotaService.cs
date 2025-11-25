@@ -28,14 +28,14 @@ namespace School.Business.Services
 
         public async Task<IEnumerable<DadosNotaDTO>> ObterTodos()
         {
-           var result = await _notaRepository.SelectAll();
+           var result = await _notaRepository.ObterNotaAluno();
            var dto = _mapper.Map<IEnumerable<DadosNotaDTO>>(result);
            return dto;
         }
 
         public async Task<DadosNotaDTO> ObterById(long id)
         {
-            var result = await _notaRepository.SelectByQuery(n => n.Id == id);
+            var result = await _notaRepository.ObterNotaMatriculaPeloId(id);
             if(result is null)
             {
                 Notificar("Nota não encontrada!");
@@ -47,8 +47,8 @@ namespace School.Business.Services
 
         public async Task<DadosNotaDTO> Criar(CriarNotaDTO nota)
         {
-            if(ExecutarValidacao(new CriarNotaValidator(), nota) == false) return null;
-            var matricula = await _matriculaDisciplinaRepository.GetMatriculaCompleta(nota.MatriculaDisciplinaId);
+            if (ExecutarValidacao(new CriarNotaValidator(), nota) == false) return null;
+            var matricula = await _matriculaDisciplinaRepository.ObterMatriculaCompleta(nota.MatriculaDisciplinaId);
             if (matricula == null)
             {
                 Notificar("Matrícula da disciplina não encontrada.");
@@ -61,7 +61,7 @@ namespace School.Business.Services
             }
             var totalPeso = matricula.Notas.ToList();
             var somaPesos = totalPeso.Sum(n => n.Peso) + nota.Peso;
-            if(somaPesos > 1)
+            if (somaPesos > 1)
             {
                 Notificar("O peso total das notas não pode exceder 1.");
                 return null;
@@ -70,7 +70,7 @@ namespace School.Business.Services
             var entity = _mapper.Map<Nota>(nota);
             _notaRepository.Insert(entity);
             await _notaRepository.Commit();
-            if(somaPesos == 1)
+            if (somaPesos == 1)
             {
                 var soma = totalPeso.Sum(n => n.Valor * n.Peso) + (nota.Valor * nota.Peso);
                 matricula.NotaFinal = soma;
@@ -81,10 +81,38 @@ namespace School.Business.Services
             return dto;
 
         }
-        public Task<DadosNotaDTO> Atualizar(CriarNotaDTO nota)
+
+
+        public async Task<DadosNotaDTO> Atualizar(AtualizarNotaDTO nota)
         {
             
-            throw new NotImplementedException();
+            if(!ExecutarValidacao(new AtualizarNotaValidator(), nota)) return null;
+            
+            var entity = await _notaRepository.SelectByQuery(n => n.Id == nota.Id);
+            if(entity is null)
+            {
+                Notificar("Nota não encontrada!");
+                return null;
+            }
+            entity.Valor = nota.Valor;
+            entity.Descricao = nota.Descricao;
+            _notaRepository.Update(entity);
+            await _notaRepository.Commit();
+
+            var matricula = await _matriculaDisciplinaRepository.ObterMatriculaCompleta(entity.MatriculaDisciplinaId);
+
+            var totalPeso = matricula.Notas.ToList();
+            var somaPesos = totalPeso.Sum(n => n.Peso);
+
+            if (somaPesos == 1)
+            {
+                var soma = totalPeso.Sum(n => n.Valor * n.Peso);
+                matricula.NotaFinal = soma;
+                _matriculaDisciplinaRepository.Update(matricula);
+                await _matriculaDisciplinaRepository.Commit();
+            }
+            var dto = _mapper.Map<DadosNotaDTO>(entity);
+            return dto;
         }
     }
 }

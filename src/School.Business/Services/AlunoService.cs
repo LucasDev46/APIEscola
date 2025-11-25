@@ -26,7 +26,7 @@ namespace School.Business.Services
 
         public async Task<DadosAlunoDTO> ObterById(long id)
         {
-            var aluno = await _alunoRepository.GetAlunoWithDisciplinas(id);
+            var aluno = await _alunoRepository.ObterAlunoDisciplinas(id);
             if (aluno == null)
             {
                 Notificar("Aluno não encontrado.");
@@ -38,7 +38,7 @@ namespace School.Business.Services
 
         public async Task<IEnumerable<DadosAlunoDTO>> ObterTodos()
         {
-            var alunos = await _alunoRepository.SelectAll();
+            var alunos = await _alunoRepository.ObterTodosAlunoDisciplina();
             var alunosDto = _mapper.Map<IEnumerable<DadosAlunoDTO>>(alunos);
             return alunosDto;
         }
@@ -47,12 +47,14 @@ namespace School.Business.Services
         {
             if(ExecutarValidacao(new CriarAlunoValidator(), aluno) == false) return null;
 
-            if(await _pessoaRepository.GetPessoaByEmail(aluno.Email) != null)
+            if(await _pessoaRepository.ObterPessoaByEmail(aluno.Email) != null)
             {
                 Notificar("Já existe um usuário cadastrado com este email!");
                 return null;
             }
             var entity = _mapper.Map<Aluno>(aluno);
+            var gerarMatricula = $"ALU{DateTime.Now.Year}{new Random().Next(1000, 9999)}";
+            entity.Matricula = gerarMatricula;
             _alunoRepository.Insert(entity);
             await _alunoRepository.Commit();
             var alunoDto = _mapper.Map<DadosAlunoDTO>(entity);

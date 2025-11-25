@@ -11,7 +11,7 @@ namespace School.Data.Repository
         {
         }
 
-        public async Task<Pessoa> GetPessoaByEmail(string email)
+        public async Task<Pessoa> ObterPessoaByEmail(string email)
         {
             return await _dbSet.AsNoTracking().FirstOrDefaultAsync(p => p.Email == email);
         }

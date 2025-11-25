@@ -15,6 +15,5 @@ namespace School.Business.DTO.Aluno
         public string Tipo { get; set; } = "Aluno";
         [JsonIgnore]
         public bool Ativo { get; set; } = true;
-        public string Matricula { get; set; }
     }
 }

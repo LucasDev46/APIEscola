@@ -29,7 +29,7 @@ namespace School.Business.Services
 
         public async Task<DadosMatriculaDisciplinaDTO> ObterById(long id)
         {
-            var matricula = await _matriculaDisciplinaRepository.GetMatriculaWithDetails(id);
+            var matricula = await _matriculaDisciplinaRepository.ObterMatriculaComDetalhes(id);
             if(matricula is null)
             {
                 Notificar("Matricula não encontrada!");
@@ -39,39 +39,43 @@ namespace School.Business.Services
             return matriculaDto;
         }
 
-        public async Task<IEnumerable<DadosMatriculaDisciplinaDTO>> ObterTodos()
+        public async Task<IEnumerable<DadosMatriculaDTO>> ObterTodos()
         {
            
-            var matriculas = await _matriculaDisciplinaRepository.SelectAll();
-            var dadosMatriculas = _mapper.Map<IEnumerable<DadosMatriculaDisciplinaDTO>>(matriculas);
+            var matriculas = await _matriculaDisciplinaRepository.ObterTodasMatriculasComDetalhes();
+            var dadosMatriculas = _mapper.Map<IEnumerable<DadosMatriculaDTO>>(matriculas);
             return dadosMatriculas;
         }
 
 
-        public async Task<DadosMatriculaDisciplinaDTO> Criar(CriarMatriculaDisciplinaDTO matDisc)
+        public async Task<DadosMatriculaDTO> Criar(CriarMatriculaDisciplinaDTO matDisc)
         {
             if (!ExecutarValidacao(new CriarMatriculaDisciplinaValidator(), matDisc)) return null;
-
+            
             if (await _alunoRepository.SelectByQuery(a => a.Id == matDisc.AlunoId) == null)
             {
                 Notificar("Aluno não encontrado.");
                 return null;
             }
+         
             if (await _disciplinaRepository.SelectByQuery(d => d.Id == matDisc.DisciplinaId) == null)
             {
                 Notificar("Disciplina não encontrada.");
                 return null;
             }
+            var existeMatricula = await _matriculaDisciplinaRepository.SelectByQuery(a => a.AlunoId == matDisc.AlunoId && a.DisciplinaId == matDisc.DisciplinaId);
+            
+            if(existeMatricula != null)
+            {
+                Notificar("Aluno ja cadastrado na disciplina!");
+                return null;
+            }
             var matricula = _mapper.Map<MatriculaDisciplina>(matDisc);
             _matriculaDisciplinaRepository.Insert(matricula);
             await _matriculaDisciplinaRepository.Commit();
-            var dadosMatricula = _mapper.Map<DadosMatriculaDisciplinaDTO>(matricula);
-            return dadosMatricula;
-        }
-        public Task<DadosMatriculaDisciplinaDTO> Atualizar(AtualizarAlunoDTO matDisc)
-        {
-            //ainda será implementado
-            throw new NotImplementedException();
+            var dadosMatricula = await _matriculaDisciplinaRepository.ObterMatriculaComDetalhes(matricula.Id);
+            var dadosMatriculaDto = _mapper.Map<DadosMatriculaDTO>(dadosMatricula);
+            return dadosMatriculaDto;
         }
 
         public async Task<bool> Inativar(long id)

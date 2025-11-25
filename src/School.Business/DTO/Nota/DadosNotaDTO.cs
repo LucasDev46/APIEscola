@@ -1,8 +1,11 @@
-﻿namespace School.Business.DTO.Nota
+﻿
+namespace School.Business.DTO.Nota
 {
     public class DadosNotaDTO
     {
         public long Id { get; set; }
+        public long MatriculaId { get; set; }
+        
         public decimal Valor { get; set; }
         public decimal Peso { get; set; }
         public string Descricao { get; set; }

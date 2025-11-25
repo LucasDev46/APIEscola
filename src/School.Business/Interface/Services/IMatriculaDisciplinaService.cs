@@ -6,10 +6,9 @@ namespace School.Business.Interface.Services
 {
     public interface IMatriculaDisciplinaService
     {
-        Task<IEnumerable<DadosMatriculaDisciplinaDTO>> ObterTodos();
+        Task<IEnumerable<DadosMatriculaDTO>> ObterTodos();
         Task<DadosMatriculaDisciplinaDTO> ObterById(long id);
-        Task<DadosMatriculaDisciplinaDTO> Criar(CriarMatriculaDisciplinaDTO matDisc);
-        Task<DadosMatriculaDisciplinaDTO> Atualizar(AtualizarAlunoDTO matDisc);
+        Task<DadosMatriculaDTO> Criar(CriarMatriculaDisciplinaDTO matDisc);
         Task<bool> Inativar(long id);
     }
 }

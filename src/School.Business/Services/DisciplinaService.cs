@@ -27,7 +27,7 @@ namespace School.Business.Services
 
         public async Task<IEnumerable<DadosDisciplinaDTO>> ObterTodos()
         {
-            var disc = await _disciplinaRepository.GetAllDisciplinaWithProfessor();
+            var disc = await _disciplinaRepository.ObterTodasDisciplinaComProfessor();
             var discDto = _mapper.Map<IEnumerable<DadosDisciplinaDTO>>(disc);
             return discDto;
         }
@@ -35,7 +35,7 @@ namespace School.Business.Services
        
         public async Task<DadosDisciplinaDTO> ObterById(long id)
         {
-            var disc =  await _disciplinaRepository.GetDisciplinaWithProfessor(id);
+            var disc =  await _disciplinaRepository.ObterDisciplinaComProfessor(id);
             if (disc == null)
             {
                 Notificar("Disciplina não encontrada.");

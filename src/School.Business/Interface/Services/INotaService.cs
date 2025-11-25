@@ -9,6 +9,6 @@ namespace School.Business.Interface.Services
         Task<IEnumerable<DadosNotaDTO>> ObterTodos();
         Task<DadosNotaDTO> ObterById(long id);
         Task<DadosNotaDTO> Criar(CriarNotaDTO nota);
-        Task<DadosNotaDTO> Atualizar(CriarNotaDTO nota);
+        Task<DadosNotaDTO> Atualizar(AtualizarNotaDTO nota);
     }
 }

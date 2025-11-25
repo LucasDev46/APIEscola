@@ -5,6 +5,7 @@ namespace School.Business.Interface.Repository
 {
     public interface IAlunoRepository : IRepository<Aluno>
     {
-        Task<Aluno> GetAlunoWithDisciplinas(long id);
+        Task<Aluno> ObterAlunoDisciplinas(long id);
+        Task<IEnumerable<Aluno>> ObterTodosAlunoDisciplina();
     }
 }

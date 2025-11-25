@@ -11,19 +11,34 @@ namespace School.Data.Repository
         public MatriculaDisciplinaRepository(SchoolDbContext context) : base(context)
         {
         }
-        public async Task<MatriculaDisciplina> GetMatriculaCompleta(long id)
+        public async Task<MatriculaDisciplina> ObterMatriculaCompleta(long id)
         {
             return await _dbSet
+                .Include(m => m.Disciplina)
                 .Include(m => m.Notas)
                 .FirstOrDefaultAsync(m => m.Id == id);
         }
-        public async Task<MatriculaDisciplina> GetMatriculaWithDetails(long id)
+        public async Task<MatriculaDisciplina> ObterMatriculaComDetalhes(long id)
         {
             return await _dbSet.Include(md => md.Aluno)
                                .Include(md => md.Disciplina)
                                .Include(md => md.Notas)
                                .FirstOrDefaultAsync(md => md.Id == id);
 
+        }
+        
+        public async Task<IEnumerable<MatriculaDisciplina>> ObterTodasMatriculasComDetalhes()
+        {
+            return await _dbSet.Include(md => md.Aluno)
+                               .Include(md => md.Disciplina)    
+                               .ToListAsync();
+        }
+        public async Task<decimal> ObterPeso(long id)
+        {
+            return await _dbSet.Include(m => m.Notas)
+                               .Where(m => m.Id == id)
+                               .SelectMany(m => m.Notas)
+                               .SumAsync(n => n.Peso);
         }
     }
 }

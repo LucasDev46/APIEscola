@@ -35,13 +35,15 @@ public class AutoMapperConfig : Profile
         //matriculaDisciplina
         CreateMap<MatriculaDisciplina, DadosMatriculaDisciplinaDTO>().ForMember(dest => dest.NomeAluno, opt => opt.MapFrom(src => src.Aluno.Nome))
                                                                      .ForMember(dest => dest.NomeDisciplina, opt => opt.MapFrom(src => src.Disciplina.Nome));
+        CreateMap<MatriculaDisciplina, DadosMatriculaDTO>().ForMember(dest => dest.NomeAluno, opt => opt.MapFrom(src => src.Aluno.Nome))
+                                                                     .ForMember(dest => dest.NomeDisciplina, opt => opt.MapFrom(src => src.Disciplina.Nome));
         CreateMap<MatriculaDisciplina, CriarMatriculaDisciplinaDTO>().ReverseMap();
         CreateMap<MatriculaDisciplina, AtualizarMatriculaDisciplinaDTO>().ReverseMap();
 
         //nota
-        CreateMap<Nota, DadosNotaDTO>();
+        CreateMap<Nota, DadosNotaDTO>().ForMember(dest => dest.MatriculaId, opt => opt.MapFrom(src => src.MatriculaDisciplinaId));
         CreateMap<Nota, CriarNotaDTO>().ReverseMap();
-
+        CreateMap<Nota, AtualizarNotaDTO>().ReverseMap();
 
 
 
