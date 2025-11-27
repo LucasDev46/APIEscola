@@ -1,5 +1,7 @@
 ﻿
 
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace School.Business.Models
 {
     public class MatriculaDisciplina : Entity

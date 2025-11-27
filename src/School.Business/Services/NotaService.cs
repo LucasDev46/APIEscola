@@ -111,6 +111,7 @@ namespace School.Business.Services
                 _matriculaDisciplinaRepository.Update(matricula);
                 await _matriculaDisciplinaRepository.Commit();
             }
+            
             var dto = _mapper.Map<DadosNotaDTO>(entity);
             return dto;
         }
