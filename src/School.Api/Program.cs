@@ -19,6 +19,8 @@ builder.Configuration.AddEnvironmentVariables();
 builder.Services.AddDbContext<SchoolDbContext>(options =>
     options.UseSqlServer(Environment.GetEnvironmentVariable("ConnectionString")));
 
+builder.Services.AddIdentityConfiguration(builder.Configuration);
+
 // desativando o modelstate para fazer responses personalizados
 builder.Services.Configure<ApiBehaviorOptions>(options =>
 {
